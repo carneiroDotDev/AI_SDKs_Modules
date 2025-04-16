@@ -52,6 +52,8 @@ def main():
    
    try:
       chroma_client = chromadb.Client()
+      # Here comes the llm embedding function. In this case defined as a class.
+      # You can also use the default embedding function, which is a simple embedding function that returns the input as the output.
       db = chroma_client.get_or_create_collection(name=DB_NAME, embedding_function=embed_fn)
    
       db.add(documents=documents, ids=[str(i) for i in range(len(documents))])
@@ -65,7 +67,7 @@ def main():
       result = db.query(query_texts=[query], n_results=1)
       [all_passages] = result["documents"]
       
-      print(all_passages[0])
+      print("all ->", all_passages[0])
       
       # Switch to query mode when generating embeddings.
       embed_fn.document_mode = False
@@ -88,13 +90,13 @@ def main():
           passage_oneline = passage.replace("\n", " ")
           prompt += f"PASSAGE: {passage_oneline}\n"
       
-      print(prompt)
+      print('final prompt -> ', prompt)
 
       answer = client.models.generate_content(
       model="gemini-2.0-flash",
       contents=prompt)
 
-      print(answer.text)
+      print('Gemini answer ->', answer.text)
             
       
    finally:
