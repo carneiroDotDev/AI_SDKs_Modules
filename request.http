@@ -1,0 +1,19 @@
+### List all books
+GET http://localhost:8000/books
+
+
+
+### Testing dynamic routing + query params
+GET http://localhost:8000/books/Author%20One/?category=science
+
+### Post request simple
+POST http://localhost:8000/books/create_book
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Title Seven",
+  "author": "Author Seven",
+  "category": "python"
+}
+
